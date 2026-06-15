@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estante Virtual — Marketplace</title>
+    <link rel="stylesheet" href="style.css" />
+       <script src="api.js" defer></script>
+    <script src="marketplace.js" defer></script>
+  </head>
+  <body>
+
+  
+    <div id="tela-auth" class="tela-auth">
+      <div class="auth-box">
+        <h1 class="auth-logo"> Estante Virtual</h1>
+        <p class="auth-subtitulo">Marketplace de livros</p>
+
+        <div class="auth-abas">
+          <button class="aba aba--ativa" id="aba-login" onclick="mostrarAba('login')">Entrar</button>
+          <button class="aba" id="aba-cadastro" onclick="mostrarAba('cadastro')">Cadastrar</button>
+        </div>
+
+        <form id="form-login" class="auth-form" onsubmit="handleLogin(event)">
+          <div class="campo">
+            <label for="login-email">E-mail</label>
+            <input type="email" id="login-email" placeholder="seu@email.com" required />
+          </div>
+          <div class="campo">
+            <label for="login-senha">Senha</label>
+            <input type="password" id="login-senha" placeholder="••••••••" required />
+          </div>
+          <p class="auth-erro" id="erro-login"></p>
+          <button type="submit" class="btn btn--primary btn--full">Entrar</button>
+        </form>
+
+        <form id="form-cadastro" class="auth-form" style="display:none" onsubmit="handleCadastro(event)">
+          <div class="campo">
+            <label for="cad-nome">Nome</label>
+            <input type="text" id="cad-nome" placeholder="Seu nome" required />
+          </div>
+          <div class="campo">
+            <label for="cad-email">E-mail</label>
+            <input type="email" id="cad-email" placeholder="seu@email.com" required />
+          </div>
+          <div class="campo">
+            <label for="cad-senha">Senha</label>
+            <input type="password" id="cad-senha" placeholder="••••••••" required />
+          </div>
+          <p class="auth-erro" id="erro-cadastro"></p>
+          <button type="submit" class="btn btn--primary btn--full">Criar conta</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="tela-marketplace" style="display:none">
+
+      <header class="header">
+        <div class="header__inner">
+          <h1 class="header__logo">📚 Estante Virtual</h1>
+          <div class="header__direita">
+            <span class="header__usuario" id="header-usuario"></span>
+            <button class="nav-link" onclick="irParaAdmin()"> Área Admin</button>
+            <button class="btn btn--secundario" onclick="handleLogout()">Sair</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="filtros">
+        <div class="filtros__inner">
+          <input type="text" id="input-busca" class="filtros__busca" placeholder="Buscar por título..." oninput="aplicarFiltros()" />
+          <select id="select-genero" class="filtros__select" onchange="aplicarFiltros()">
+            <option value="">Todos os gêneros</option>
+          </select>
+        </div>
+      </section>
+
+      <main class="main">
+        <div class="livros-grid" id="livros-grid">
+          <p class="estado-vazio" id="estado-vazio">Carregando...</p>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-overlay" id="detalhe-overlay" style="display:none">
+      <div class="modal modal--detalhe">
+        <button class="modal__fechar modal__fechar--abs" onclick="fecharDetalhe()">✕</button>
+        <div class="detalhe__capa-wrap">
+          <img id="detalhe-capa" src="" alt="" style="display:none" />
+          <div id="detalhe-sem-capa" class="card__sem-capa" style="display:none">📖</div>
+        </div>
+        <div class="detalhe__info">
+          <span id="detalhe-categoria" class="card__categoria"></span>
+          <h2 id="detalhe-nome" class="detalhe__titulo"></h2>
+          <p id="detalhe-descricao" class="detalhe__descricao"></p>
+          <div class="detalhe__meta" id="detalhe-meta"></div>
+          <div class="detalhe__acoes">
+            <button class="btn btn--primary" id="detalhe-btn-ler"> Ler</button>
+            <button class="btn btn--anuncio" id="detalhe-btn-anuncio"> Ver Anúncio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="leitura-overlay" style="display:none">
+      <div class="modal modal--leitura">
+        <div class="modal__header">
+          <h2 class="modal__titulo" id="leitura-titulo">Lendo...</h2>
+          <button class="modal__fechar" onclick="fecharLeitura()">✕</button>
+        </div>
+        <div class="leitura__corpo" id="leitura-corpo">
+          <p class="leitura__gerando"> Gerando trecho do livro...</p>
+        </div>
+        <div class="leitura__rodape">
+          <button class="btn btn--secundario" onclick="fecharLeitura()">Fechar</button>
+          <button class="btn btn--primary" onclick="gerarTrechoLeitura()"> Outro trecho</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="anuncio-overlay" style="display:none">
+      <div class="modal modal--anuncio">
+        <div class="anuncio__header">
+          <span class="anuncio__tag"> ANÚNCIO</span>
+          <button class="modal__fechar" onclick="fecharAnuncio()">✕</button>
+        </div>
+        <div class="anuncio__corpo" id="anuncio-corpo"></div>
+        <div class="anuncio__rodape">
+          <button class="btn btn--primary btn--full" onclick="fecharAnuncio()">Entendi, quero comprar! </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" style="display:none"></div>
+
+ 
+  </body>
+</html>

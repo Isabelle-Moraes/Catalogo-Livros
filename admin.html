@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estante Virtual — Área Admin</title>
+    <link rel="stylesheet" href="style.css" />
+        <script src="api.js" defer></script>
+    <script src="admin.js" defer></script>
+  </head>
+  <body>
+
+    <div id="tela-bloqueada" style="display:none">
+      <div class="acesso-negado">
+        <h2> Acesso restrito</h2>
+        <p>Você precisa estar logado para acessar a área administrativa.</p>
+        <button class="btn btn--primary" onclick="irParaLogin()">Ir para o login</button>
+      </div>
+    </div>
+
+    <div id="tela-admin" style="display:none">
+
+      <header class="header">
+        <div class="header__inner">
+          <h1 class="header__logo">📚 Estante Virtual <span class="header__badge">Admin</span></h1>
+          <div class="header__direita">
+            <span class="header__usuario" id="header-usuario"></span>
+            <button class="nav-link" onclick="irParaMarketplace()">Ver Marketplace</button>
+            <button class="btn btn--secundario" onclick="handleLogout()">Sair</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="filtros">
+        <div class="filtros__inner">
+          <input type="text" id="input-busca" class="filtros__busca" placeholder="Buscar por título..." oninput="aplicarFiltros()" />
+          <select id="select-genero" class="filtros__select" onchange="aplicarFiltros()">
+            <option value="">Todos os gêneros</option>
+          </select>
+          <button class="btn btn--primary" onclick="abrirModalNovo()">+ Novo Livro</button>
+        </div>
+      </section>
+
+      <main class="main">
+        <div class="livros-grid" id="livros-grid">
+          <p class="estado-vazio" id="estado-vazio">Carregando...</p>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay" style="display:none">
+      <div class="modal modal--form">
+        <div class="modal__header">
+          <h2 class="modal__titulo" id="modal-titulo">Novo Livro</h2>
+          <button class="modal__fechar" onclick="fecharModal()">✕</button>
+        </div>
+        <form id="form-produto" onsubmit="handleSalvar(event)">
+          <div class="campo">
+            <label for="f-nome">Título *</label>
+            <input type="text" id="f-nome" placeholder="Ex: Dom Casmurro" required />
+          </div>
+          <div class="campo">
+            <label for="f-descricao">Autor / Sinopse</label>
+            <textarea id="f-descricao" rows="2" placeholder="Ex: Machado de Assis — Romance clássico..."></textarea>
+          </div>
+          <div class="campos-inline">
+            <div class="campo">
+              <label for="f-preco">Avaliação (0–5) *</label>
+              <input type="number" id="f-preco" step="0.1" min="0" max="5" placeholder="4.5" required />
+            </div>
+            <div class="campo">
+              <label for="f-preco-antigo">Ano de publicação</label>
+              <input type="number" id="f-preco-antigo" min="0" max="2100" placeholder="1899" />
+            </div>
+          </div>
+          <div class="campos-inline">
+            <div class="campo">
+              <label for="f-categoria">Gênero</label>
+              <select id="f-categoria">
+                <option value="">— Selecione —</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="f-estoque">Nº de páginas</label>
+              <input type="number" id="f-estoque" min="0" placeholder="300" />
+            </div>
+          </div>
+          <div class="campo">
+            <label for="f-imagem">URL da Capa</label>
+            <input type="url" id="f-imagem" placeholder="https://..." />
+          </div>
+          <div class="campo campo-check">
+            <label><input type="checkbox" id="f-destaque" /> Livro em destaque</label>
+          </div>
+          <p class="auth-erro" id="erro-form"></p>
+          <div class="modal__acoes">
+            <button type="button" class="btn btn--secundario" onclick="fecharModal()">Cancelar</button>
+            <button type="submit" class="btn btn--primary" id="btn-salvar">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" style="display:none"></div>
+
+
+  </body>
+</html>
