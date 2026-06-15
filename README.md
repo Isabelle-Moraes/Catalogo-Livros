@@ -63,9 +63,9 @@ Não foram utilizados frameworks ou bibliotecas de frontend.
 
 ## Links
 
-- **GitHub Pages**: `<link do deploy aqui>`
+- **GitHub Pages**: `<https://isabelle-moraes.github.io/Catalogo-Livros/>`
 - **Vídeo pitch**: `<https://youtu.be/qXZAJQ9AqNA>`
-- **Publicação no LinkedIn**: `<link da publicação aqui>`
+- **Publicação no LinkedIn**: `<https://www.linkedin.com/posts/isabelle-caroline-772060350_conclu%C3%AD-o-projeto-final-da-disciplina-de-activity-7472099493786775552-dZRT?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFeSqkYB41XlR3jolgYOnA__bmFy_fQ6--A>`
 
 ## Estrutura básica do projeto
 
